@@ -2,7 +2,6 @@
 
 **实时监控 Polymarket 100个高流动性市场的异常信号，帮你第一时间发现市场异动。**
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/duolaAmengweb3/polysurge)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## 🎯 一句话介绍
@@ -11,7 +10,6 @@
 
 ## 💡 为什么做这个项目
 
-作为一个 Polymarket 交易者，我深知这种痛苦：
 - 📉 **总是后知后觉** - 看到价格变化时，最佳时机早已错过
 - 🔍 **信息过载** - 市场太多，无法同时监控
 - ⚡ **反应太慢** - 手动刷新页面，错过关键信号
@@ -123,9 +121,6 @@ cd dashboard
 python server.py
 ```
 
-### 一键部署
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/duolaAmengweb3/polysurge)
-
 ## 📱 使用指南
 
 ### 🎯 重点关注这些信号
@@ -158,19 +153,7 @@ python server.py
 - ✅ **无数据存储** - 纯实时分析
 - ✅ **开源透明** - 代码完全公开
 
-## 🎯 实际应用案例
 
-### 成功案例
-- **2024年大选市场** - 提前捕捉到关键摇摆州异常
-- **体育预测市场** - 比赛前大额投注信号准确
-- **加密市场** - 价格异动预警效果显著
-
-### 用户反馈
-> "用了 PolySurge 后，我的反应速度提升了3倍，再也不会错过关键信号了！"
-> 
-> "评分系统很智能，帮我过滤掉了很多噪音信号，专注于真正重要的异动。"
-
-## 🛣️ 产品路线图
 
 ### 近期更新
 - [x] 基础异常检测
@@ -189,9 +172,7 @@ python server.py
 - [ ] 社交交易功能
 - [ ] 专业版工具集
 
-## 🤝 贡献指南
 
-欢迎贡献代码！请阅读 [CONTRIBUTING.md](CONTRIBUTING.md) 了解如何参与项目开发。
 
 ### 开发环境设置
 ```bash
@@ -211,18 +192,6 @@ git push origin feature/amazing-feature
 # 创建 Pull Request
 ```
 
-## 📞 联系方式
-
-### 💬 社区交流
-- **Telegram**: [Contact Us](https://t.me/)
-- **X (Twitter)**: [Follow Us](https://x.com/)
-
-### 📧 商务合作
-- **邮箱**: [Contact Email](mailto:contact@example.com)
-
-## 📄 许可证
-
-本项目采用 [MIT 许可证](LICENSE) - 详见 [LICENSE](LICENSE) 文件。
 
 ## ⚠️ 免责声明
 
