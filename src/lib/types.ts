@@ -5,6 +5,12 @@ export interface Market {
     type: 'general' | 'short_term' | 'sports';
     volume_24h: number;
     end_date_iso?: string;
+    description?: string;
+    outcomes?: string[];
+    outcomePrices?: string[];
+    liquidity?: string;
+    image?: string;
+    clobTokenIds?: string[];
 }
 
 export interface Trade {
@@ -12,8 +18,9 @@ export interface Trade {
     price: number;
     size: number;
     side: 'BUY' | 'SELL';
-    proxyWallet: string;
-    asset: string;
+    proxyWallet?: string;
+    asset?: string;
+    market?: string;
 }
 
 export interface AnomalyEvent {

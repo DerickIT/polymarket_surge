@@ -29,7 +29,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-background text-foreground font-sans">
       {/* Top Navigation Bar */}
       <header className="border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-        <div className="container flex h-14 max-w-screen-2xl items-center px-4">
+        <div className="w-full flex h-14 items-center px-4">
           <div className="mr-4 flex items-center">
             <a className="mr-6 flex items-center space-x-2" href="/">
               <Zap className="h-6 w-6 text-primary" />
@@ -80,7 +80,7 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <main className="container max-w-screen-2xl p-4 md:p-6 space-y-6">
+      <main className="w-full p-4 md:p-6 space-y-6">
         {/* Key Metrics Row */}
         <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
           <MetricCard
@@ -112,9 +112,9 @@ export default function Dashboard() {
           />
         </div>
 
-        <div className="grid gap-6 grid-cols-1 lg:grid-cols-12 h-auto lg:h-[calc(100vh-220px)]">
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-12 h-auto lg:h-[calc(100vh-220px)]">
           {/* Left: Anomaly Feed (Terminal Style) */}
-          <Card className="lg:col-span-8 flex flex-col border-border/50 shadow-sm h-[500px] lg:h-auto">
+          <Card className="md:col-span-7 lg:col-span-8 xl:col-span-9 flex flex-col border-border/50 shadow-sm h-[500px] lg:h-auto">
             <CardHeader className="pb-3 border-b border-border/50 bg-muted/20">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
@@ -132,7 +132,7 @@ export default function Dashboard() {
                       <TableRow className="hover:bg-transparent border-border/50">
                         <TableHead className="w-[100px]">Time</TableHead>
                         <TableHead className="w-[80px]">Score</TableHead>
-                        <TableHead>Market</TableHead>
+                        <TableHead className="min-w-[200px]">Market</TableHead>
                         <TableHead className="hidden sm:table-cell">Type</TableHead>
                         <TableHead className="text-right">Volume</TableHead>
                       </TableRow>
@@ -164,14 +164,14 @@ export default function Dashboard() {
                               <Badge
                                 variant="outline"
                                 className={`font-mono text-xs border-0 ${event.score >= 70
-                                    ? 'bg-red-500/10 text-red-500 hover:bg-red-500/20'
-                                    : 'bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500/20'
+                                  ? 'bg-red-500/10 text-red-500 hover:bg-red-500/20'
+                                  : 'bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500/20'
                                   }`}
                               >
                                 {event.score}
                               </Badge>
                             </TableCell>
-                            <TableCell className="font-medium text-sm max-w-[150px] sm:max-w-[200px] truncate" title={event.market}>
+                            <TableCell className="font-medium text-sm max-w-[200px] sm:max-w-[400px] truncate" title={event.market}>
                               <Link href={`/market/${event.condition_id}`} className="hover:underline hover:text-primary transition-colors">
                                 {event.market}
                               </Link>
@@ -199,7 +199,7 @@ export default function Dashboard() {
           </Card>
 
           {/* Right: Top Markets (Compact List) */}
-          <Card className="lg:col-span-4 flex flex-col border-border/50 shadow-sm h-[500px] lg:h-auto">
+          <Card className="md:col-span-5 lg:col-span-4 xl:col-span-3 flex flex-col border-border/50 shadow-sm h-[500px] lg:h-auto">
             <CardHeader className="pb-3 border-b border-border/50 bg-muted/20">
               <CardTitle className="text-base font-semibold">Top Markets</CardTitle>
               <CardDescription className="text-xs">By 24h Volume</CardDescription>
