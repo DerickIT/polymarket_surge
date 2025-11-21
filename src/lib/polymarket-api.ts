@@ -5,14 +5,13 @@ export const API_CONFIG = {
     DATA: 'https://data-api.polymarket.com',
     CLOB: 'https://clob.polymarket.com',
 };
-
 /**
  * Fetch market details from Gamma API
- * Uses condition_id to find the specific market
+ * Uses condition_ids to find the specific market
  */
 export async function getMarket(conditionId: string): Promise<Market | null> {
     try {
-        const res = await fetch(`${API_CONFIG.GAMMA}/markets?condition_id=${conditionId}&active=true`);
+        const res = await fetch(`${API_CONFIG.GAMMA}/markets?condition_ids=${conditionId}&active=true`);
         if (!res.ok) throw new Error('Market not found');
 
         const data = await res.json();
@@ -44,7 +43,7 @@ export async function getMarket(conditionId: string): Promise<Market | null> {
             outcomePrices: m.outcomePrices,
             liquidity: m.liquidity,
             image: m.image,
-            clobTokenIds: clobTokenIds // Add this to Market type if needed
+            clobTokenIds: clobTokenIds
         };
     } catch (error) {
         console.error('Error fetching market:', error);

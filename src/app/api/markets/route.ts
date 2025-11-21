@@ -18,26 +18,32 @@ export async function GET(request: Request) {
         const data = await res.json();
 
         // Transform data to match Market interface
-        const markets = data
-            .filter((m: any) => m.conditionId) // Filter out invalid markets
-            .map((m: any) => {
-                const slug = (m.slug || '').toLowerCase();
-                let type = 'general';
-                if (['15m', '30m', '1h', 'hour', 'minute'].some(k => slug.includes(k))) {
-                    type = 'short_term';
-                } else if (['nba', 'nfl', 'mlb', 'nhl', 'soccer', 'match', 'game', 'vs', 'win-on'].some(k => slug.includes(k))) {
-                    type = 'sports';
-                }
+        const uniqueMarkets = new Map();
 
-                return {
-                    condition_id: m.conditionId,
-                    question: m.question,
-                    slug: m.slug,
-                    type,
-                    volume_24h: Number(m.volume24hrClob || m.volume24hr || 0),
-                    end_date_iso: m.endDate
-                };
-            });
+        data.forEach((m: any) => {
+            if (m.conditionId && !uniqueMarkets.has(m.conditionId)) {
+                uniqueMarkets.set(m.conditionId, m);
+            }
+        });
+
+        const markets = Array.from(uniqueMarkets.values()).map((m: any) => {
+            const slug = (m.slug || '').toLowerCase();
+            let type = 'general';
+            if (['15m', '30m', '1h', 'hour', 'minute'].some(k => slug.includes(k))) {
+                type = 'short_term';
+            } else if (['nba', 'nfl', 'mlb', 'nhl', 'soccer', 'match', 'game', 'vs', 'win-on'].some(k => slug.includes(k))) {
+                type = 'sports';
+            }
+
+            return {
+                condition_id: m.conditionId,
+                question: m.question,
+                slug: m.slug,
+                type,
+                volume_24h: Number(m.volume24hrClob || m.volume24hr || 0),
+                end_date_iso: m.endDate
+            };
+        });
 
         return NextResponse.json(markets);
     } catch (error) {

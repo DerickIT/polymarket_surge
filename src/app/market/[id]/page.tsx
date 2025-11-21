@@ -59,26 +59,43 @@ export default function MarketPage() {
                     <ArrowLeft className="mr-2 h-4 w-4" /> Back to Dashboard
                 </Link>
 
-                <div className="flex flex-col lg:flex-row gap-6">
-                    {/* Main Content */}
-                    <div className="flex-1 space-y-6 min-w-0">
-                        <div>
-                            <h1 className="text-xl md:text-2xl font-bold tracking-tight mb-2 break-words">{market?.question}</h1>
-                            <div className="flex flex-wrap items-center gap-2">
-                                <Badge variant="outline" className="font-mono text-xs">{market?.condition_id}</Badge>
-                                {market?.end_date_iso && (
-                                    <span className="text-xs text-muted-foreground flex items-center">
-                                        <Calendar className="mr-1 h-3 w-3" />
-                                        Ends {new Date(market.end_date_iso).toLocaleDateString()}
-                                    </span>
-                                )}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Main Content Column */}
+                    <div className="lg:col-span-2 space-y-6">
+                        {/* Header Section */}
+                        <div className="flex gap-4 items-start">
+                            {market?.image && (
+                                <div className="shrink-0">
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img
+                                        src={market.image}
+                                        alt={market.question}
+                                        className="w-16 h-16 md:w-24 md:h-24 rounded-full object-cover border border-border/50 shadow-sm"
+                                    />
+                                </div>
+                            )}
+                            <div className="space-y-2">
+                                <h1 className="text-xl md:text-3xl font-bold tracking-tight break-words leading-tight">
+                                    {market?.question}
+                                </h1>
+                                <div className="flex flex-wrap items-center gap-2">
+                                    <Badge variant="outline" className="font-mono text-xs bg-muted/50">
+                                        {market?.type}
+                                    </Badge>
+                                    {market?.end_date_iso && (
+                                        <Badge variant="secondary" className="text-xs font-normal">
+                                            <Calendar className="mr-1 h-3 w-3" />
+                                            Ends {new Date(market.end_date_iso).toLocaleDateString()}
+                                        </Badge>
+                                    )}
+                                </div>
                             </div>
                         </div>
 
                         {/* Chart */}
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className="text-sm font-medium">Price History (Last 500 Trades)</CardTitle>
+                        <Card className="border-border/50 shadow-sm">
+                            <CardHeader className="pb-2">
+                                <CardTitle className="text-sm font-medium text-muted-foreground">Price History (Last 500 Trades)</CardTitle>
                             </CardHeader>
                             <CardContent className="h-[300px] md:h-[400px]">
                                 {tradesLoading ? (
@@ -98,11 +115,26 @@ export default function MarketPage() {
                                 )}
                             </CardContent>
                         </Card>
+
+                        {/* Description */}
+                        {market?.description && (
+                            <Card className="border-border/50 shadow-sm">
+                                <CardHeader>
+                                    <CardTitle className="text-base font-semibold">Market Rules</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="prose prose-sm dark:prose-invert max-w-none text-muted-foreground whitespace-pre-wrap">
+                                        {market.description}
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        )}
                     </div>
 
-                    {/* Sidebar Stats */}
-                    <div className="w-full lg:w-80 space-y-4">
-                        <Card>
+                    {/* Sidebar Column */}
+                    <div className="space-y-6">
+                        {/* Market Stats */}
+                        <Card className="border-border/50 shadow-sm">
                             <CardHeader>
                                 <CardTitle className="text-sm font-medium">Market Stats</CardTitle>
                             </CardHeader>
@@ -111,7 +143,7 @@ export default function MarketPage() {
                                     <span className="text-sm text-muted-foreground flex items-center">
                                         <DollarSign className="mr-2 h-4 w-4" /> 24h Volume
                                     </span>
-                                    <span className="font-mono font-bold">
+                                    <span className="font-mono font-bold text-lg">
                                         ${(market?.volume_24h || 0).toLocaleString()}
                                     </span>
                                 </div>
@@ -119,33 +151,26 @@ export default function MarketPage() {
                                     <span className="text-sm text-muted-foreground flex items-center">
                                         <Activity className="mr-2 h-4 w-4" /> Liquidity
                                     </span>
-                                    <span className="font-mono font-bold">
+                                    <span className="font-mono font-bold text-lg">
                                         ${(Number(market?.liquidity) || 0).toLocaleString()}
-                                    </span>
-                                </div>
-                                <div className="flex justify-between items-center">
-                                    <span className="text-sm text-muted-foreground flex items-center">
-                                        <BarChart3 className="mr-2 h-4 w-4" /> Outcomes
-                                    </span>
-                                    <span className="font-mono font-bold">
-                                        {market?.outcomes ? JSON.parse(market.outcomes).length : '-'}
                                     </span>
                                 </div>
                             </CardContent>
                         </Card>
 
-                        <Card>
+                        {/* Outcomes */}
+                        <Card className="border-border/50 shadow-sm">
                             <CardHeader>
-                                <CardTitle className="text-sm font-medium">Outcome Prices</CardTitle>
+                                <CardTitle className="text-sm font-medium">Outcomes</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <div className="space-y-2">
+                                <div className="space-y-3">
                                     {market?.outcomes && market?.outcomePrices ? (
                                         JSON.parse(market.outcomes).map((outcome: string, i: number) => (
-                                            <div key={outcome} className="flex justify-between items-center p-2 rounded-md bg-muted/50">
-                                                <span className="text-sm font-medium truncate max-w-[150px]">{outcome}</span>
+                                            <div key={outcome} className="flex justify-between items-center p-3 rounded-lg bg-muted/30 border border-border/30">
+                                                <span className="font-medium text-sm">{outcome}</span>
                                                 <span className="font-mono font-bold text-primary">
-                                                    {(JSON.parse(market.outcomePrices)[i] * 100).toFixed(1)}%
+                                                    {(Number(JSON.parse(market.outcomePrices)[i]) * 100).toFixed(1)}%
                                                 </span>
                                             </div>
                                         ))
@@ -153,6 +178,39 @@ export default function MarketPage() {
                                         <div className="text-sm text-muted-foreground">No outcome data</div>
                                     )}
                                 </div>
+                            </CardContent>
+                        </Card>
+
+                        {/* Token IDs */}
+                        <Card className="border-border/50 shadow-sm">
+                            <CardHeader>
+                                <CardTitle className="text-sm font-medium">Contract Info</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <div>
+                                    <div className="text-xs text-muted-foreground mb-1">Condition ID</div>
+                                    <div className="font-mono text-[10px] break-all bg-muted/50 p-2 rounded border border-border/30">
+                                        {market?.condition_id}
+                                    </div>
+                                </div>
+                                {market?.clobTokenIds && market.clobTokenIds.length > 0 && (
+                                    <div>
+                                        <div className="text-xs text-muted-foreground mb-1 flex justify-between">
+                                            <span>Token IDs</span>
+                                            <Badge variant="outline" className="text-[10px] h-4 px-1">Polygon</Badge>
+                                        </div>
+                                        <div className="space-y-2">
+                                            {market.clobTokenIds.map((tokenId: string, i: number) => (
+                                                <div key={tokenId} className="font-mono text-[10px] break-all bg-muted/50 p-2 rounded border border-border/30 relative group">
+                                                    <span className="absolute top-1 right-1 text-[9px] text-muted-foreground opacity-50">
+                                                        {market.outcomes ? JSON.parse(market.outcomes)[i] : `Outcome ${i + 1}`}
+                                                    </span>
+                                                    {tokenId}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </CardContent>
                         </Card>
                     </div>
